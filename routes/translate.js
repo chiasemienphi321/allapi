@@ -11,7 +11,7 @@ router.get('/google', function (req, res, next) {
         url: url,
     }, function (error, response, body) {
         if (error) {
-            return res.send(response);
+            return res.send({error:error});
         }
         var mean = JSON.parse(body)[0][0];
         var options = {
@@ -24,14 +24,24 @@ router.get('/google', function (req, res, next) {
         };
         //xxin v
         request(options, function (error, response2, body2) {
-            try {
-                var json = JSON.parse(body2);
-                var spelling = json.results[0].lexicalEntries[0].pronunciations[0].phoneticSpelling;
-                var audioFile = json.results[0].lexicalEntries[0].pronunciations[0].audioFile;
-                var typeword = json.results[0].lexicalEntries[0].lexicalCategory;
-                return res.json({word:mean[1], mean: mean[0], spelling: spelling,type: typeword,audioFile:audioFile});
-            } catch (e) {
+            if (error) {
+                return res.send({error:error});
+            } else {
+                try {
+                    var json = JSON.parse(body2);
+                    var spelling = json.results[0].lexicalEntries[0].pronunciations[0].phoneticSpelling;
+                    var audioFile = json.results[0].lexicalEntries[0].pronunciations[0].audioFile;
+                    var typeword = json.results[0].lexicalEntries[0].lexicalCategory;
+                    return res.json({
+                        word: mean[1],
+                        mean: mean[0],
+                        spelling: spelling,
+                        type: typeword,
+                        audioFile: audioFile
+                    });
+                } catch (e) {
 
+                }
             }
         });
 
