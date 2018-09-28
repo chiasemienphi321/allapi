@@ -29,7 +29,7 @@ router.get('/google', function (req, res, next) {
                 var spelling = json.results[0].lexicalEntries[0].pronunciations[0].phoneticSpelling;
                 var audioFile = json.results[0].lexicalEntries[0].pronunciations[0].audioFile;
                 var typeword = json.results[0].lexicalEntries[0].lexicalCategory;
-                return res.json({word:mean[0], mean: mean[1], spelling: spelling,type: typeword,audioFile:audioFile});
+                return res.json({word:mean[1], mean: mean[0], spelling: spelling,type: typeword,audioFile:audioFile});
             } catch (e) {
 
             }
