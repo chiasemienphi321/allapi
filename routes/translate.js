@@ -22,6 +22,7 @@ router.get('/google', function (req, res, next) {
                 'app_key': 'c980f725deb5b72b477ca647ad678784',
             }
         };
+        //xxin v
         request(options, function (error, response2, body2) {
             try {
                 var json = JSON.parse(body2);
