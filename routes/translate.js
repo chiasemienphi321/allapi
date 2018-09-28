@@ -13,7 +13,27 @@ router.get('/google', function (req, res, next) {
         if (error) {
             return res.send(response);
         }
-        return res.send(body);
+        var mean = JSON.parse(body)[0][0];
+        var options = {
+            url: 'https://od-api.oxforddictionaries.com/api/v1/entries/en/' + sourceText,
+            headers: {
+                'Content-Type': 'text/html',
+                'app_id': '282c8a0e',
+                'app_key': 'c980f725deb5b72b477ca647ad678784',
+            }
+        };
+        request(options, function (error, response2, body2) {
+            try {
+                var json = JSON.parse(body2);
+                var spelling = json.results[0].lexicalEntries[0].pronunciations[0].phoneticSpelling;
+                var audioFile = json.results[0].lexicalEntries[0].pronunciations[0].audioFile;
+                var typeword = json.results[0].lexicalEntries[0].lexicalCategory;
+                return res.json({word:mean[0], mean: mean[1], spelling: spelling,type: typeword,audioFile:audioFile});
+            } catch (e) {
+
+            }
+        });
+
     });
 });
 
