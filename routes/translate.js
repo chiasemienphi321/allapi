@@ -48,4 +48,8 @@ router.get('/google', function (req, res, next) {
     });
 });
 
+router.get('/gioithieu',function (req,res) {
+    res.render('gioithieugoogletranslate');
+});
+
 module.exports = router;
